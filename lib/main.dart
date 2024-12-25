@@ -37,9 +37,9 @@ class CountdownPageState extends State<CountdownPage> {
   }
 
   void _startCountdown() {
-    final now = DateTime.now();
-    final christmas = DateTime(now.year, 12, 25);
-    _timeLeft = christmas.difference(now);
+    final current = DateTime.now();
+    final christmas = DateTime(current.year, 12, 25);
+    _timeLeft = christmas.difference(current);
     _timer = Timer.periodic(Duration(seconds: 1), (_) {
       setState(() {
         _timeLeft -= Duration(seconds: 1);
