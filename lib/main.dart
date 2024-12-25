@@ -14,7 +14,7 @@ class CountdownApp extends StatelessWidget {
 }
 
 class CountdownPage extends StatefulWidget {
-  const CountdownPage({super.key}); 
+  const CountdownPage({super.key});
 
   @override
   CountdownPageState createState() => CountdownPageState();
@@ -29,11 +29,6 @@ class CountdownPageState extends State<CountdownPage> {
   void initState() {
     super.initState();
     _startCountdown();
-    _playMusic();
-  }
-
-  void _playMusic() async {
-    await _audioPlayer.play(AssetSource('jinglebells.mp3'));
   }
 
   void _startCountdown() {
@@ -45,6 +40,10 @@ class CountdownPageState extends State<CountdownPage> {
         _timeLeft -= Duration(seconds: 1);
       });
     });
+  }
+
+  void _playMusic() async {
+    await _audioPlayer.play(AssetSource('jinglebells.mp3'));
   }
 
   @override
@@ -76,8 +75,6 @@ class CountdownPageState extends State<CountdownPage> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
-
-
             const Text(
               "Keep the Christmas spirit alive! 🎅",
               style: TextStyle(
@@ -90,6 +87,11 @@ class CountdownPageState extends State<CountdownPage> {
               style: TextStyle(fontSize: 18),
               textAlign: TextAlign.center,
             ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _playMusic,
+              child: const Text("Play Christmas Music 🎶"),
+            )
           ],
         ),
       ),
