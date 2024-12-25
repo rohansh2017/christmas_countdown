@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() => runApp(CountdownApp());
 
 class CountdownApp extends StatelessWidget {
-  const CountdownApp({super.key}); // Use super parameter
+  const CountdownApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,13 +14,14 @@ class CountdownApp extends StatelessWidget {
 }
 
 class CountdownPage extends StatefulWidget {
-  const CountdownPage({super.key}); // Use super parameter
+  const CountdownPage({super.key}); 
 
   @override
-  _CountdownPageState createState() => _CountdownPageState();
+  CountdownPageState createState() => CountdownPageState();
 }
 
-class _CountdownPageState extends State<CountdownPage> {
+class CountdownPageState extends State<CountdownPage> {
+  final AudioPlayer _audioPlayer = AudioPlayer();
   late Timer _timer;
   Duration _timeLeft = Duration();
 
@@ -27,6 +29,11 @@ class _CountdownPageState extends State<CountdownPage> {
   void initState() {
     super.initState();
     _startCountdown();
+    _playMusic();
+  }
+
+  void _playMusic() async {
+    await _audioPlayer.play(AssetSource('jinglebells.mp3'));
   }
 
   void _startCountdown() {
@@ -42,6 +49,7 @@ class _CountdownPageState extends State<CountdownPage> {
 
   @override
   void dispose() {
+    _audioPlayer.dispose();
     _timer.cancel();
     super.dispose();
   }
@@ -54,16 +62,13 @@ class _CountdownPageState extends State<CountdownPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Add a festive message
             const Text(
               "🎄 Get ready for Christmas! 🎁",
               style: TextStyle(
                   fontSize: 28, fontWeight: FontWeight.bold, color: Colors.red),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20), // Spacer for better layout
-
-            // Countdown text
+            const SizedBox(height: 20),
             Text(
               "${_timeLeft.inDays} Days, ${_timeLeft.inHours % 24} Hours, "
               "${_timeLeft.inMinutes % 60} Minutes, ${_timeLeft.inSeconds % 60} Seconds",
@@ -72,7 +77,7 @@ class _CountdownPageState extends State<CountdownPage> {
             ),
             const SizedBox(height: 20),
 
-            // Add extra details below the countdown
+
             const Text(
               "Keep the Christmas spirit alive! 🎅",
               style: TextStyle(
