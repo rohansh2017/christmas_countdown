@@ -57,14 +57,18 @@ class CountdownPageState extends State<CountdownPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Christmas Countdown!! Celebrate!")),
+      appBar: AppBar(title: const Text("Christmas Countdown!! Celebrate!"), backgroundColor: Colors.red[900],),
       body: Stack(
         children: [
-          const SnowfallOrAnythings(
-            numberOfParticles: 200,
-            particleSize: 4.0,
-            particleSpeed: 0.8,
-            particleType: ParticleType.snowflake,
+          // Snowfall effect as the background
+          Container(
+            color: Colors.red[900], // Set the desired background color here
+            child: const SnowfallOrAnythings(
+              numberOfParticles: 200,
+              particleSize: 4.0,
+              particleSpeed: 0.8,
+              particleType: ParticleType.snowflake,
+            ),
           ),
           Center(
             child: Column(
@@ -73,27 +77,27 @@ class CountdownPageState extends State<CountdownPage> {
                 const Text(
                   "🎄 Get ready for Christmas! 🎁",
                   style: TextStyle(
-                      fontSize: 28, fontWeight: FontWeight.bold, color: Colors.red),
+                      fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
                 Text(
                   "${_timeLeft.inDays} Days, ${_timeLeft.inHours % 24} Hours, "
                   "${_timeLeft.inMinutes % 60} Minutes, ${_timeLeft.inSeconds % 60} Seconds",
-                  style: const TextStyle(fontSize: 24),
+                  style: const TextStyle(fontSize: 30, color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
                 const Text(
                   "Keep the Christmas spirit alive! 🎅",
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 30,
                       color: Colors.green),
                 ),
                 const SizedBox(height: 10),
                 const Text(
                   "Don't forget to complete your holiday preparations. ⛄",
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 30, color: Colors.blueAccent),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
