@@ -57,7 +57,7 @@ class CountdownPageState extends State<CountdownPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Christmas Countdown!! Celebrate!"), backgroundColor: Colors.red[900],),
+      appBar: AppBar(title: const Text("Christmas Countdown!! Celebrate!"), backgroundColor: Colors.red[900], foregroundColor: Colors.white,),
       body: Stack(
         children: [
           // Snowfall effect as the background
