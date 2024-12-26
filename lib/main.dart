@@ -34,13 +34,25 @@ class CountdownPageState extends State<CountdownPage> {
 
   void _startCountdown() {
     final current = DateTime.now();
-    final christmas = DateTime(current.year, 12, 25);
-    _timeLeft = christmas.difference(current);
-    _timer = Timer.periodic(Duration(seconds: 1), (_) {
+    if (current.month == 12 && current.day == 25) {
       setState(() {
-        _timeLeft -= Duration(seconds: 1);
+        _timeLeft = Duration.zero;
       });
-    });
+    } else {
+      final christmas = DateTime(
+        current.month == 12 && current.day > 25
+            ? current.year + 1
+            : current.year,
+        12,
+        25,
+      );
+      _timeLeft = christmas.difference(current);
+      _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+        setState(() {
+          _timeLeft = _timeLeft - const Duration(seconds: 1);
+        });
+      });
+    }
   }
 
   void _playMusic() async {
@@ -57,12 +69,15 @@ class CountdownPageState extends State<CountdownPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Christmas Countdown!! Celebrate!"), backgroundColor: Colors.red[900], foregroundColor: Colors.white,),
+      appBar: AppBar(
+        title: const Text("Christmas Countdown!! Celebrate!"),
+        backgroundColor: Colors.red[900],
+        foregroundColor: Colors.white,
+      ),
       body: Stack(
         children: [
-          // Snowfall effect as the background
           Container(
-            color: Colors.red[900], // Set the desired background color here
+            color: Colors.red[900],
             child: const SnowfallOrAnythings(
               numberOfParticles: 200,
               particleSize: 4.0,
@@ -77,22 +92,32 @@ class CountdownPageState extends State<CountdownPage> {
                 const Text(
                   "🎄 Get ready for Christmas! 🎁",
                   style: TextStyle(
-                      fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
-                Text(
-                  "${_timeLeft.inDays} Days, ${_timeLeft.inHours % 24} Hours, "
-                  "${_timeLeft.inMinutes % 60} Minutes, ${_timeLeft.inSeconds % 60} Seconds",
-                  style: const TextStyle(fontSize: 30, color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
+                if (_timeLeft == Duration.zero)
+                  const Text(
+                    "🎄 Christmas is today!! 🎁",
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green),
+                    textAlign: TextAlign.center,
+                  )
+                else
+                  Text(
+                    "${_timeLeft.inDays} Days, ${_timeLeft.inHours % 24} Hours, "
+                    "${_timeLeft.inMinutes % 60} Minutes, ${_timeLeft.inSeconds % 60} Seconds",
+                    style: const TextStyle(fontSize: 30, color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
                 const SizedBox(height: 20),
                 const Text(
                   "Keep the Christmas spirit alive! 🎅",
-                  style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.green),
+                  style: TextStyle(fontSize: 30, color: Colors.green),
                 ),
                 const SizedBox(height: 10),
                 const Text(
